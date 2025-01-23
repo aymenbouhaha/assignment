@@ -65,6 +65,9 @@ export default {
 			"grey-3": "#72767C",
 			"grey-border": "#E9EAEB",
 		},
+		boxShadow: {
+			"drop-down": "0px 24px 48px -12px #1018282E",
+		},
 	},
 	plugins: [require("tailwindcss-animate")],
 };
