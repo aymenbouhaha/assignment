@@ -8,37 +8,37 @@ export default {
 		},
 		fontSize: {
 			h1: [
-				"18px",
+				"24px",
 				{
 					fontWeight: "500",
 				},
 			],
 			p1: [
-				"16px",
+				"20px",
 				{
 					fontWeight: "500",
 				},
 			],
 			p2: [
-				"14px",
+				"18px",
 				{
 					fontWeight: "500",
 				},
 			],
 			p21: [
-				"14px",
+				"18px",
 				{
 					fontWeight: "400",
 				},
 			],
 			p3: [
-				"12px",
+				"16px",
 				{
 					fontWeight: "400",
 				},
 			],
 			p4: [
-				"10px",
+				"14px",
 				{
 					fontWeight: "400",
 				},

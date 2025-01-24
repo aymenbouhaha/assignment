@@ -1,4 +1,5 @@
 import { Home } from "@/features/home";
+import { Repositories } from "@/features/repositories/page/repositories.tsx";
 
 export const AppRoutes = [
 	{
@@ -7,6 +8,6 @@ export const AppRoutes = [
 	},
 	{
 		path: "/repositories",
-		element: <div>Repository</div>,
+		element: <Repositories />,
 	},
 ];
