@@ -15,6 +15,7 @@ import { UserModel } from "@home/models/user.model.ts";
 import { ThreeDotsLoader } from "@shared/components/loaders/three-dots-loader.tsx";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useToast } from "@shared/hooks/use-toast.ts";
+import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
 
 export const WelcomeCard = ({
 	form,
@@ -33,12 +34,11 @@ export const WelcomeCard = ({
 	});
 	const [users, setUsers] = useState<UserModel[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [after, setAfter] = useState<string | null>();
-	const [hasNextPage, setHasNextPage] = useState(false);
+	const [cursor, setCursor] = useState<PaginationModel>(paginationDefaultValues);
 
 	const [infiniteRef] = useInfiniteScroll({
 		loading,
-		hasNextPage,
+		hasNextPage: cursor.hasNextPage,
 		onLoadMore: loadUsers,
 		disabled: false,
 	});
@@ -56,8 +56,7 @@ export const WelcomeCard = ({
 	};
 
 	useEffect(() => {
-		setAfter(null);
-		setHasNextPage(false);
+		setCursor(paginationDefaultValues);
 		loadUsers().finally(() => setLoading(false));
 	}, [debouncedSearch]);
 
@@ -65,14 +64,16 @@ export const WelcomeCard = ({
 
 	async function loadUsers() {
 		try {
-			const { data, error } = await getUsers({ variables: { after: after, query: `${debouncedSearch} in:login` } });
+			const { data, error } = await getUsers({
+				variables: { after: cursor.endCursor, query: `${debouncedSearch} in:login` },
+			});
 			if (error) {
 				throw new Error(error.message);
 			}
 			if (data && !error) {
-				setUsers([...users, ...data.search.nodes.filter((item) => item.__typename === "User")]);
-				setAfter(data.search.pageInfo.endCursor);
-				setHasNextPage(data.search.pageInfo.hasNextPage);
+				const { pageInfo, nodes } = data.search;
+				setUsers([...users, ...nodes.filter((item) => item.__typename === "User")]);
+				setCursor(pageInfo);
 			}
 		} catch (e) {
 			setOpen(false);
@@ -122,7 +123,7 @@ export const WelcomeCard = ({
 											text={item.login}
 										/>
 									))}
-									{hasNextPage && (
+									{cursor.hasNextPage && (
 										<div ref={infiniteRef}>
 											<ThreeDotsLoader wrapperClass="flex justify-center" />
 										</div>
