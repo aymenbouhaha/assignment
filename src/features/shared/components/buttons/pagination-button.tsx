@@ -8,8 +8,6 @@ export const PaginationButton = ({
 	previousButton: Omit<ButtonProps, "size" | "variant">;
 	nextButton: Omit<ButtonProps, "size" | "variant">;
 }) => {
-	console.log(nextButton.disabled);
-
 	return (
 		<div className="w-full flex gap-4 items-center justify-center">
 			<Button variant={"pagination"} size={"pagination"} {...previousButton}>

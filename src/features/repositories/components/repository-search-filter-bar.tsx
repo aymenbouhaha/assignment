@@ -15,11 +15,15 @@ export const RepositorySearchFilterBar = ({
 	return (
 		<FormProviderWrapper form={form} className="flex gap-3" onSubmit={() => {}}>
 			<div className="flex-[3]">
-				<ControlledTextInput
-					placeholder={"Type repository name"}
-					fieldName={"repository"}
-					leadIcon={{ icon: "Search" }}
-				/>
+				{languages ? (
+					<ControlledTextInput
+						placeholder={"Type repository name"}
+						fieldName={"repository"}
+						leadIcon={{ icon: "Search" }}
+					/>
+				) : (
+					<Skeleton className={"h-12"} />
+				)}
 			</div>
 			<div className="flex-1">
 				{languages ? (
