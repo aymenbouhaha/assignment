@@ -1,74 +1,36 @@
 import { Icon } from "@shared/components/icons/icons.tsx";
 import { SearchInput } from "@shared/components/inputs/search-input.tsx";
 import { Button } from "@shared/components/ui";
-import { useEffect, useState } from "react";
-import { useDebounce } from "@shared/hooks/use-debounce.ts";
 import { useLazyQuery } from "@apollo/client";
 import { GetUsersQuery } from "@home/api/get-users-query.ts";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
 import { UserModel } from "@home/models/user.model.ts";
-import useInfiniteScroll from "react-infinite-scroll-hook";
-import { useToast } from "@shared/hooks/use-toast.ts";
-import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
-import { UsersList } from "@home/components/users-list.tsx";
 
 export const WelcomeCard = () => {
-	const [search, setSearch] = useState<string>("");
-	const debouncedSearch = useDebounce<string>(search, 500);
-
-	const [open, setOpen] = useState<boolean>(false);
-
 	const [getUsers] = useLazyQuery<SearchQueryResultModel<UserModel>>(GetUsersQuery, {
 		fetchPolicy: "network-only",
 	});
-	const [users, setUsers] = useState<UserModel[]>([]);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [cursor, setCursor] = useState<PaginationModel>(paginationDefaultValues);
 
-	const [infiniteRef] = useInfiniteScroll({
-		loading,
-		hasNextPage: cursor.hasNextPage,
-		onLoadMore: loadUsers,
-		disabled: false,
-	});
-
-	const onSearchChange = (value: string) => {
-		setSearch(value);
-		if (!value) {
-			setOpen(false);
-			return;
+	const loadUsers = async ({ after, search }: { after: string | null; search?: string }) => {
+		const { data, error } = await getUsers({
+			variables: { after, query: `${search} in:login` },
+		});
+		if (error) {
+			throw new Error(error.message);
 		}
-		setOpen(true);
-		setLoading(true);
-		setUsers([]);
+		if (data) {
+			const { pageInfo, nodes } = data.search;
+			const users = nodes
+				.filter((item) => item.__typename === "User")
+				.map((item) => ({ placeholder: item.login, image: item.avatarUrl, value: item.id }));
+			return {
+				items: users,
+				cursor: pageInfo,
+			};
+		} else {
+			return undefined;
+		}
 	};
-
-	useEffect(() => {
-		setCursor(paginationDefaultValues);
-		loadUsers().finally(() => setLoading(false));
-	}, [debouncedSearch]);
-
-	const { toast } = useToast();
-
-	async function loadUsers() {
-		try {
-			const { data, error } = await getUsers({
-				variables: { after: cursor.endCursor, query: `${debouncedSearch} in:login` },
-			});
-			if (error) {
-				throw new Error(error.message);
-			}
-			if (data && !error) {
-				const { pageInfo, nodes } = data.search;
-				setUsers([...users, ...nodes.filter((item) => item.__typename === "User")]);
-				setCursor(pageInfo);
-			}
-		} catch (e) {
-			setOpen(false);
-			toast({ variant: "destructive", title: "An error occurred fetching users" });
-			console.log(e);
-		}
-	}
 
 	return (
 		<div
@@ -83,25 +45,13 @@ export const WelcomeCard = () => {
 					<div className="text-p21 text-primary-black text-center">Please enter the name of a github user</div>
 				</div>
 				<SearchInput
-					onSearchChange={onSearchChange}
 					placeholder={"Github user name"}
 					leadIcon={{
 						icon: "Profile",
 						iconClassName: "stroke-grey-2",
 					}}
-					open={open}
-					setOpen={setOpen}
-					sheetContent={
-						<UsersList
-							users={users}
-							loading={loading}
-							cursor={cursor}
-							onItemClick={() => {
-								setOpen(false);
-							}}
-							infiniteRef={infiniteRef}
-						/>
-					}
+					getDropdownItems={loadUsers}
+					errorMessage={"An error occurred fetching users"}
 				/>
 			</div>
 			<Button type={"submit"}>Confirm</Button>
