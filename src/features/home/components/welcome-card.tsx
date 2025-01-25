@@ -1,15 +1,17 @@
 import { Icon } from "@shared/components/icons/icons.tsx";
 import { SearchInput } from "@shared/components/inputs/search-input.tsx";
-import { Button } from "@shared/components/ui";
 import { useLazyQuery } from "@apollo/client";
 import { GetUsersQuery } from "@home/api/get-users-query.ts";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
 import { UserModel } from "@home/models/user.model.ts";
+import { useNavigate } from "react-router-dom";
 
 export const WelcomeCard = () => {
 	const [getUsers] = useLazyQuery<SearchQueryResultModel<UserModel>>(GetUsersQuery, {
 		fetchPolicy: "network-only",
 	});
+
+	const navigate = useNavigate();
 
 	const loadUsers = async ({ after, search }: { after: string | null; search?: string }) => {
 		const { data, error } = await getUsers({
@@ -35,7 +37,7 @@ export const WelcomeCard = () => {
 	return (
 		<div
 			className={
-				"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-border p-4 md:mx-2"
+				"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-2/50 p-4 md:mx-2"
 			}
 		>
 			<div className="flex w-full flex-col items-center gap-[18px]">
@@ -52,9 +54,12 @@ export const WelcomeCard = () => {
 					}}
 					getDropdownItems={loadUsers}
 					errorMessage={"An error occurred fetching users"}
+					onItemSelected={(item) => {
+						console.log("Hello");
+						navigate(`/repositories/${item.placeholder}`);
+					}}
 				/>
 			</div>
-			<Button type={"submit"}>Confirm</Button>
 		</div>
 	);
 };

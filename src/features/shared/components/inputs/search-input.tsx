@@ -10,7 +10,7 @@ import { paginationDefaultValues, PaginationModel } from "@shared/models/paginat
 import { useToast } from "@shared/hooks/use-toast.ts";
 import { useDebounce } from "@shared/hooks/use-debounce.ts";
 
-export type Items = {
+export type Item = {
 	image?: string;
 	value: string;
 	placeholder: string;
@@ -21,6 +21,7 @@ export const SearchInput = ({
 	leadIcon,
 	getDropdownItems,
 	errorMessage,
+	onItemSelected,
 }: {
 	placeholder: string;
 	leadIcon?: {
@@ -30,8 +31,9 @@ export const SearchInput = ({
 	getDropdownItems: (param: {
 		after: string | null;
 		search?: string;
-	}) => Promise<{ items: Items[]; cursor: PaginationModel } | undefined>;
+	}) => Promise<{ items: Item[]; cursor: PaginationModel } | undefined>;
 	errorMessage?: string;
+	onItemSelected: (item: Item) => void;
 }) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -41,7 +43,7 @@ export const SearchInput = ({
 
 	const { toast } = useToast();
 
-	const [items, setItems] = useState<Items[]>([]);
+	const [items, setItems] = useState<Item[]>([]);
 	const [cursor, setCursor] = useState<PaginationModel>(paginationDefaultValues);
 
 	const [infiniteRef] = useInfiniteScroll({
@@ -53,6 +55,7 @@ export const SearchInput = ({
 
 	const onSearchChange = (value: string) => {
 		setSearch(value);
+		setItems([]);
 		if (!value) {
 			setOpen(false);
 			return;
@@ -71,13 +74,13 @@ export const SearchInput = ({
 		try {
 			const result = await getDropdownItems({ after: cursor.endCursor, search: debouncedSearch });
 			if (result) {
-				const { items, cursor: pageInfo } = result as { items: Items[]; cursor: PaginationModel };
+				const { items, cursor: pageInfo } = result as { items: Item[]; cursor: PaginationModel };
 				setItems((prev) => [...prev, ...items]);
 				setCursor(pageInfo);
 			}
 		} catch (e) {
 			setOpen(false);
-			toast({ variant: "destructive", title: errorMessage });
+			toast({ variant: "destructive", title: errorMessage ?? "An error occurred, please try later" });
 			console.log(e);
 		}
 	}
@@ -96,7 +99,14 @@ export const SearchInput = ({
 					) : items.length ? (
 						<>
 							{items.map((item) => (
-								<SearchResultItem key={`user.${item.value}`} image={item.image} text={item.placeholder} />
+								<SearchResultItem
+									key={`user.${item.value}`}
+									image={item.image}
+									text={item.placeholder}
+									onClick={() => {
+										onItemSelected(item);
+									}}
+								/>
 							))}
 							{infiniteRef && cursor?.hasNextPage && (
 								<div ref={infiniteRef}>
