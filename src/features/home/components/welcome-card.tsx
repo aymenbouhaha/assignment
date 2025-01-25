@@ -23,7 +23,7 @@ export const WelcomeCard = ({
 	onSubmit: (value: GithubLoginForm) => void;
 }) => {
 	const [search, setSearch] = useState<string>("");
-	const debouncedSearch = useDebounce<string>(search, 200);
+	const debouncedSearch = useDebounce<string>(search, 500);
 
 	const [open, setOpen] = useState<boolean>(false);
 

@@ -7,7 +7,7 @@ export const AppRoutes = [
 		element: <Home />,
 	},
 	{
-		path: "/repositories",
+		path: "/repositories/:login",
 		element: <Repositories />,
 	},
 ];

@@ -9,9 +9,12 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				default: "bg-primary-black text-p3 text-primary-white",
+				pagination:
+					"transition-all duration-300 ease-in-out gap-3 text-p4 font-medium text-primary-purple border border-background hover:border-primary-purple py-2 px-3  hover:bg-[#fff]",
 			},
 			size: {
 				default: "h-9 py-2.5 w-full",
+				pagination: "",
 			},
 		},
 		defaultVariants: {
