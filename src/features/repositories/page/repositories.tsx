@@ -88,13 +88,7 @@ export const Repositories = () => {
 				) : (
 					<>
 						<RepositorySearchFilterBar form={form} languages={languages} />
-						<div
-							className={cn("flex flex-col gap-3 border border-grey-border bg-[#fff] p-3 rounded-[10px]", {
-								"h-80 justify-center items-center": !loading && repositories.length === 0,
-							})}
-						>
-							<RepositoryList owner={login} repositories={repositories} loading={loading} />
-						</div>
+						<RepositoryList owner={login} repositories={repositories} loading={loading} />
 						{repositories.length > 0 && (
 							<PaginationButton
 								previousButton={{
