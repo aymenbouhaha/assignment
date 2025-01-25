@@ -2,8 +2,6 @@ import { UseFormReturn } from "react-hook-form";
 import { GithubLoginForm } from "@home/models/github-login-form.ts";
 import { Icon } from "@shared/components/icons/icons.tsx";
 import { ControlledSearchInput } from "@shared/components/inputs/controlled-search-input.tsx";
-import { Loader } from "@shared/components/loaders/loader.tsx";
-import { SearchResultItem } from "@shared/components/others/search-result.tsx";
 import { Button } from "@shared/components/ui";
 import { FormProviderWrapper } from "@shared/components/inputs/form-provider-wrapper.tsx";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -12,10 +10,10 @@ import { useLazyQuery } from "@apollo/client";
 import { GetUsersQuery } from "@home/api/get-users-query.ts";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
 import { UserModel } from "@home/models/user.model.ts";
-import { ThreeDotsLoader } from "@shared/components/loaders/three-dots-loader.tsx";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useToast } from "@shared/hooks/use-toast.ts";
 import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
+import { UsersList } from "@home/components/users-list.tsx";
 
 export const WelcomeCard = ({
 	form,
@@ -107,36 +105,16 @@ export const WelcomeCard = ({
 					open={open}
 					setOpen={setOpen}
 					sheetContent={
-						<>
-							{loading ? (
-								<div className={"w-full h-[100px] flex justify-center items-center"}>
-									<Loader />
-								</div>
-							) : users.length ? (
-								<>
-									{users.map((item) => (
-										<SearchResultItem
-											key={`user.${item.id}`}
-											onClick={() => {
-												form.setValue("login", item.login);
-												setOpen(false);
-											}}
-											image={item.avatarUrl}
-											text={item.login}
-										/>
-									))}
-									{cursor.hasNextPage && (
-										<div ref={infiniteRef}>
-											<ThreeDotsLoader wrapperClass="flex justify-center" />
-										</div>
-									)}
-								</>
-							) : (
-								<div className="w-full h-[100px] flex justify-center items-center text-primary-black text-p2">
-									No items found
-								</div>
-							)}
-						</>
+						<UsersList
+							users={users}
+							loading={loading}
+							cursor={cursor}
+							onItemClick={(user) => {
+								form.setValue("login", user.login);
+								setOpen(false);
+							}}
+							infiniteRef={infiniteRef}
+						/>
 					}
 				/>
 			</div>

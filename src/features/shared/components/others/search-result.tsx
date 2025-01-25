@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 type SearchResultItemProps = {
-	onClick: () => void;
+	onClick?: () => void;
 	text: string;
 	image?: string;
 };
