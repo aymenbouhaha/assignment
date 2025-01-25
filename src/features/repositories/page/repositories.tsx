@@ -11,7 +11,6 @@ import {
 	RepositoryFilterModel,
 } from "@/features/repositories/models/repository-filter.model.ts";
 import { useDebounce } from "@shared/hooks/use-debounce.ts";
-import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
 import { API_LIMIT } from "@/features/repositories/constants/constants.ts";
 import { PaginationButton } from "@shared/components/buttons/pagination-button.tsx";
 import { ErrorComponent } from "@shared/components/others/error-component.tsx";
@@ -25,76 +24,59 @@ export const Repositories = () => {
 
 	const debouncedRepository = useDebounce(repository, 200);
 
-	const [getRepositories] = useLazyQuery<SearchQueryResultModel<RepositoryModel>>(GetRepositoriesQuery);
-	const [loading, setLoading] = useState<boolean>(false);
-	const [isError, setIsError] = useState<boolean>(false);
-	const [cursor, setCursor] = useState<PaginationModel>(paginationDefaultValues);
+	const [getRepositories, result] = useLazyQuery<SearchQueryResultModel<RepositoryModel>>(GetRepositoriesQuery);
 
-	const [repositories, setRepositories] = useState<RepositoryModel[]>([]);
 	const [languages, setLanguages] = useState<string[] | undefined>();
+	const [repositories, setRepositories] = useState<RepositoryModel[]>([]);
 
 	useEffect(() => {
-		setCursor(paginationDefaultValues);
-		setRepositories([]);
-		setIsError(false);
 		loadRepositories(null, null);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [login, language, debouncedRepository]);
 
 	async function loadRepositories(after: string | null, before: string | null) {
-		setLoading(true);
 		let query = `owner:${login} fork:true is:private is:public sort:updated`;
 		if (language) query += ` language:${language}`;
 		if (debouncedRepository) query += ` ${debouncedRepository} in:name`;
-
-		try {
-			const result = await getRepositories({
-				variables: { after, before, query, first: before ? null : API_LIMIT, last: before ? API_LIMIT : null },
-			});
-			if (result.error) {
-				throw new Error(result.error.message);
-			}
-			if (result.data) {
-				const { nodes, pageInfo } = result.data.search;
-				const newLanguages = nodes.map((item) => item.primaryLanguage?.name).filter((item) => item !== undefined);
-
-				setLanguages((prevLanguages) => Array.from(new Set([...(prevLanguages ?? []), ...newLanguages])));
-				setRepositories(nodes.filter((item) => item.__typename === "Repository"));
-				setCursor(pageInfo);
-			}
-		} catch (e) {
-			setIsError(true);
-			console.log(e);
-		} finally {
-			setLoading(false);
-		}
+		getRepositories({
+			variables: { after, before, query, first: before ? null : API_LIMIT, last: before ? API_LIMIT : null },
+		});
 	}
+
+	useEffect(() => {
+		if (result.data) {
+			const { nodes } = result.data.search;
+			const newLanguages = nodes.map((item) => item.primaryLanguage?.name).filter((item) => item !== undefined);
+			setLanguages((prevLanguages) => Array.from(new Set([...(prevLanguages ?? []), ...newLanguages])));
+			setRepositories(result.data.search.nodes.filter((item) => item.__typename === "Repository"));
+		}
+	}, [result]);
 
 	return (
 		<div className={"py-16 px-60 flex flex-col gap-9 lg:p-4"}>
 			<RepositoryPageHeader login={login!} />
 			<div className="flex flex-col gap-4">
-				{isError ? (
+				{result.error ? (
 					<ErrorComponent />
 				) : (
 					<>
 						<RepositorySearchFilterBar onFilterValuesChange={setFilters} languages={languages} />
-						<RepositoryList owner={login} repositories={repositories} loading={loading} />
-						{repositories.length > 0 && (
+						<RepositoryList owner={login} repositories={repositories} loading={result.loading} />
+						{repositories.length > 0 && result.data && (
 							<PaginationButton
 								previousButton={{
 									onClick: () => {
-										loadRepositories(null, cursor.startCursor);
+										loadRepositories(null, result.data!.search.pageInfo.startCursor);
 										window.scrollTo({ top: 0, behavior: "smooth" });
 									},
-									disabled: !cursor.hasPreviousPage,
+									disabled: !result.data!.search.pageInfo.hasPreviousPage,
 								}}
 								nextButton={{
 									onClick: () => {
-										loadRepositories(cursor.endCursor, null);
+										loadRepositories(result.data!.search.pageInfo.endCursor, null);
 										window.scrollTo({ top: 0, behavior: "smooth" });
 									},
-									disabled: !cursor.hasNextPage,
+									disabled: !result.data!.search.pageInfo.hasNextPage,
 								}}
 							/>
 						)}
