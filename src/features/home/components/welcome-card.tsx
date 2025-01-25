@@ -1,10 +1,7 @@
-import { UseFormReturn } from "react-hook-form";
-import { GithubLoginForm } from "@home/models/github-login-form.ts";
 import { Icon } from "@shared/components/icons/icons.tsx";
-import { ControlledSearchInput } from "@shared/components/inputs/controlled-search-input.tsx";
+import { SearchInput } from "@shared/components/inputs/search-input.tsx";
 import { Button } from "@shared/components/ui";
-import { FormProviderWrapper } from "@shared/components/inputs/form-provider-wrapper.tsx";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@shared/hooks/use-debounce.ts";
 import { useLazyQuery } from "@apollo/client";
 import { GetUsersQuery } from "@home/api/get-users-query.ts";
@@ -15,13 +12,7 @@ import { useToast } from "@shared/hooks/use-toast.ts";
 import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
 import { UsersList } from "@home/components/users-list.tsx";
 
-export const WelcomeCard = ({
-	form,
-	onSubmit,
-}: {
-	form: UseFormReturn<GithubLoginForm>;
-	onSubmit: (value: GithubLoginForm) => void;
-}) => {
+export const WelcomeCard = () => {
 	const [search, setSearch] = useState<string>("");
 	const debouncedSearch = useDebounce<string>(search, 500);
 
@@ -41,8 +32,7 @@ export const WelcomeCard = ({
 		disabled: false,
 	});
 
-	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
+	const onSearchChange = (value: string) => {
 		setSearch(value);
 		if (!value) {
 			setOpen(false);
@@ -81,9 +71,7 @@ export const WelcomeCard = ({
 	}
 
 	return (
-		<FormProviderWrapper
-			form={form}
-			onSubmit={onSubmit}
+		<div
 			className={
 				"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-border p-4 md:mx-2"
 			}
@@ -94,10 +82,9 @@ export const WelcomeCard = ({
 					<div className="text-h1 text-secondary-black text-center">Welcome to Githubeautified</div>
 					<div className="text-p21 text-primary-black text-center">Please enter the name of a github user</div>
 				</div>
-				<ControlledSearchInput
+				<SearchInput
 					onSearchChange={onSearchChange}
 					placeholder={"Github user name"}
-					fieldName={"login"}
 					leadIcon={{
 						icon: "Profile",
 						iconClassName: "stroke-grey-2",
@@ -109,8 +96,7 @@ export const WelcomeCard = ({
 							users={users}
 							loading={loading}
 							cursor={cursor}
-							onItemClick={(user) => {
-								form.setValue("login", user.login);
+							onItemClick={() => {
 								setOpen(false);
 							}}
 							infiniteRef={infiniteRef}
@@ -119,6 +105,6 @@ export const WelcomeCard = ({
 				/>
 			</div>
 			<Button type={"submit"}>Confirm</Button>
-		</FormProviderWrapper>
+		</div>
 	);
 };

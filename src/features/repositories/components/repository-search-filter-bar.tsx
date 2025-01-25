@@ -1,5 +1,5 @@
 import { TextInput } from "@shared/components/inputs/text-input.tsx";
-import { SelectInput } from "@shared/components/inputs/controlled-select-input.tsx";
+import { SelectInput } from "@shared/components/inputs/select-input.tsx";
 import {
 	repositoryFilterDefault,
 	RepositoryFilterModel,
