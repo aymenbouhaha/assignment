@@ -1,11 +1,7 @@
-import { z } from "zod";
-
-export const RepositoryFilterSchema = z.object({
-	repository: z.string().optional(),
-	language: z.string().optional(),
-});
-
-export type RepositoryFilterModel = z.infer<typeof RepositoryFilterSchema>;
+export interface RepositoryFilterModel {
+	language: string;
+	repository: string;
+}
 
 export const repositoryFilterDefault = {
 	language: "",

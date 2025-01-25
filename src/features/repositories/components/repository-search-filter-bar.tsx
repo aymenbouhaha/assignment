@@ -1,24 +1,40 @@
-import { FormProviderWrapper } from "@shared/components/inputs/form-provider-wrapper.tsx";
-import { UseFormReturn } from "react-hook-form";
-import { ControlledTextInput } from "@shared/components/inputs/controlled-text-input.tsx";
-import { ControlledSelectInput } from "@shared/components/inputs/controlled-select-input.tsx";
-import { RepositoryFilterModel } from "@/features/repositories/models/repository-filter.model.ts";
+import { TextInput } from "@shared/components/inputs/text-input.tsx";
+import { SelectInput } from "@shared/components/inputs/controlled-select-input.tsx";
+import {
+	repositoryFilterDefault,
+	RepositoryFilterModel,
+} from "@/features/repositories/models/repository-filter.model.ts";
 import { Skeleton } from "@shared/components/ui";
+import { useEffect, useState } from "react";
 
 export const RepositorySearchFilterBar = ({
-	form,
 	languages,
+	onFilterValuesChange,
 }: {
-	form: UseFormReturn<RepositoryFilterModel>;
 	languages?: string[];
+	onFilterValuesChange: (value: RepositoryFilterModel) => void;
 }) => {
+	const [filterValues, setFilterValues] = useState<RepositoryFilterModel>(repositoryFilterDefault);
+
+	const onRepositoryChange = (value: string) => {
+		setFilterValues((prev) => ({ ...prev, repository: value }));
+	};
+
+	const onLanguageChange = (value: string) => {
+		setFilterValues((prev) => ({ ...prev, language: value }));
+	};
+
+	useEffect(() => {
+		onFilterValuesChange(filterValues);
+	}, [filterValues]);
+
 	return (
-		<FormProviderWrapper form={form} className="flex gap-3 lg:flex-col lg:gap-2" onSubmit={() => {}}>
+		<div className="flex gap-3 lg:flex-col lg:gap-2">
 			<div className="flex-[3]">
 				{languages ? (
-					<ControlledTextInput
+					<TextInput
 						placeholder={"Type repository name"}
-						fieldName={"repository"}
+						onValueChange={onRepositoryChange}
 						leadIcon={{ icon: "Search" }}
 					/>
 				) : (
@@ -27,8 +43,8 @@ export const RepositorySearchFilterBar = ({
 			</div>
 			<div className="flex-1">
 				{languages ? (
-					<ControlledSelectInput
-						fieldName={"language"}
+					<SelectInput
+						onValueChange={onLanguageChange}
 						values={languages.map((item) => ({ placeholder: item, value: item }))}
 						placeholder={"Languages"}
 					/>
@@ -36,6 +52,6 @@ export const RepositorySearchFilterBar = ({
 					<Skeleton className={"h-full"} />
 				)}
 			</div>
-		</FormProviderWrapper>
+		</div>
 	);
 };

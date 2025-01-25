@@ -6,13 +6,10 @@ import { SearchQueryResultModel } from "@shared/models/search-query-result.model
 import { GetRepositoriesQuery } from "@/features/repositories/api/get-repositories-query.ts";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import {
 	repositoryFilterDefault,
 	RepositoryFilterModel,
-	RepositoryFilterSchema,
 } from "@/features/repositories/models/repository-filter.model.ts";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useDebounce } from "@shared/hooks/use-debounce.ts";
 import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
 import { API_LIMIT } from "@/features/repositories/constants/constants.ts";
@@ -23,17 +20,12 @@ import { RepositoryList } from "@/features/repositories/components/repository-li
 export const Repositories = () => {
 	const { login } = useParams();
 
-	const form = useForm<RepositoryFilterModel>({
-		resolver: zodResolver(RepositoryFilterSchema),
-		defaultValues: repositoryFilterDefault,
-	});
+	const [filters, setFilters] = useState<RepositoryFilterModel>(repositoryFilterDefault);
+	const { language, repository } = filters;
 
-	const { language, repository } = form.watch();
 	const debouncedRepository = useDebounce(repository, 200);
 
-	const [getRepositories] = useLazyQuery<SearchQueryResultModel<RepositoryModel>>(GetRepositoriesQuery, {
-		fetchPolicy: "network-only",
-	});
+	const [getRepositories] = useLazyQuery<SearchQueryResultModel<RepositoryModel>>(GetRepositoriesQuery);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [isError, setIsError] = useState<boolean>(false);
 	const [cursor, setCursor] = useState<PaginationModel>(paginationDefaultValues);
@@ -86,7 +78,7 @@ export const Repositories = () => {
 					<ErrorComponent />
 				) : (
 					<>
-						<RepositorySearchFilterBar form={form} languages={languages} />
+						<RepositorySearchFilterBar onFilterValuesChange={setFilters} languages={languages} />
 						<RepositoryList owner={login} repositories={repositories} loading={loading} />
 						{repositories.length > 0 && (
 							<PaginationButton

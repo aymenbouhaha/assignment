@@ -1,87 +1,67 @@
-import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import {
-	FormControl,
-	FormField,
-	FormItem,
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@shared/components/ui";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@shared/components/ui";
 import { ChevronDown } from "lucide-react";
 import { Icon } from "@shared/components/icons/icons.tsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-interface ControlledSelectInputProps {
+interface SelectInputProps {
 	placeholder: string;
-	fieldName: string;
 	values: { placeholder: string; value: string }[];
 	inputClassName?: string;
 	contentClassName?: string;
+	onValueChange?: (value: string) => void;
+	defaultValue?: string;
 }
 
-export const ControlledSelectInput = ({
+export const SelectInput = ({
 	placeholder,
-	fieldName,
 	values,
 	inputClassName,
 	contentClassName,
-}: ControlledSelectInputProps) => {
-	const { control } = useFormContext();
+	onValueChange,
+	defaultValue = "",
+}: SelectInputProps) => {
 	const [open, setOpen] = useState(false);
+	const [value, setValue] = useState<string>("");
+
+	useEffect(() => {
+		if (onValueChange) onValueChange(value);
+	}, [value]);
 
 	return (
-		<FormField
-			control={control}
-			name={fieldName}
-			render={({ field }) => {
-				return (
-					<FormItem className="w-full h-full">
-						<Select
-							onValueChange={field.onChange}
-							defaultValue={field.value}
-							value={field.value}
-							open={open}
-							onOpenChange={setOpen}
-						>
-							<FormControl>
-								<div className="relative w-full">
-									<SelectTrigger
-										className={cn(inputClassName, {
-											"text-grey-1": !field.value,
-											"text-primary-black": field.value,
-										})}
-									>
-										<SelectValue placeholder={placeholder} />
-									</SelectTrigger>
-									{field.value ? (
-										<Icon.Close
-											className={"stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"}
-											onClick={() => field.onChange("")}
-										/>
-									) : (
-										<ChevronDown
-											className="stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"
-											onClick={() => setOpen(true)}
-										/>
-									)}
-								</div>
-							</FormControl>
-							<SelectContent className={cn(contentClassName)}>
-								{values.map((item, index) => {
-									return (
-										<SelectItem key={`${item.value}.${index}`} value={item.value}>
-											{item.placeholder}
-										</SelectItem>
-									);
-								})}
-							</SelectContent>
-						</Select>
-					</FormItem>
-				);
-			}}
-		/>
+		<div className="w-full h-full">
+			<Select onValueChange={setValue} defaultValue={defaultValue} value={value} open={open} onOpenChange={setOpen}>
+				<div className="relative w-full">
+					<SelectTrigger
+						className={cn(inputClassName, {
+							"text-grey-1": !value,
+							"text-primary-black": value,
+						})}
+					>
+						<SelectValue placeholder={placeholder} />
+					</SelectTrigger>
+					{value ? (
+						<Icon.Close
+							className={"stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"}
+							onClick={() => setValue("")}
+						/>
+					) : (
+						<ChevronDown
+							className="stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+							onClick={() => setOpen(true)}
+						/>
+					)}
+				</div>
+				<SelectContent className={cn(contentClassName)}>
+					{values.map((item, index) => {
+						return (
+							<SelectItem key={`${item.value}.${index}`} value={item.value}>
+								{item.placeholder}
+							</SelectItem>
+						);
+					})}
+				</SelectContent>
+			</Select>
+		</div>
 	);
 };
