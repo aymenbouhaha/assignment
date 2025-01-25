@@ -46,7 +46,7 @@ export const Repositories = () => {
 	useEffect(() => {
 		setCursor(paginationDefaultValues);
 		setRepositories([]);
-		// setIsError(false);
+		setIsError(false);
 		loadRepositories(null, null);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [login, language, debouncedRepository]);
@@ -81,7 +81,7 @@ export const Repositories = () => {
 	}
 
 	return (
-		<div className={"py-16 px-60 flex flex-col gap-9"}>
+		<div className={"py-16 px-60 flex flex-col gap-9 lg:p-4"}>
 			<RepositoryPageHeader login={login!} />
 			<div className="flex flex-col gap-4">
 				{isError ? (
@@ -105,7 +105,9 @@ export const Repositories = () => {
 									))}
 								</>
 							) : (
-								<div className="text-grey-1 text-h1 font-bold">{login} doesn’t have any repositories that match.</div>
+								<div className="text-grey-1 text-h1 !font-bold lg:text-p2 text-center">
+									{login} doesn’t have any repositories that match.
+								</div>
 							)}
 						</div>
 						{repositories.length > 0 && (

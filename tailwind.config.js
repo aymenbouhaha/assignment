@@ -10,7 +10,7 @@ export default {
 			h1: [
 				"24px",
 				{
-					fontWeight: "500",
+					fontWeight: "700",
 				},
 			],
 			p1: [

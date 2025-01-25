@@ -86,13 +86,15 @@ export const WelcomeCard = ({
 		<FormProviderWrapper
 			form={form}
 			onSubmit={onSubmit}
-			className={"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-border p-4"}
+			className={
+				"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-border p-4 md:mx-2"
+			}
 		>
 			<div className="flex w-full flex-col items-center gap-[18px]">
 				<Icon.UserGraphic />
 				<div className="flex flex-col items-center gap-1">
-					<div className="text-h1 text-secondary-black">Welcome to Githubeautified</div>
-					<div className="text-p21 text-primary-black ">Please enter the name of a github user</div>
+					<div className="text-h1 text-secondary-black text-center">Welcome to Githubeautified</div>
+					<div className="text-p21 text-primary-black text-center">Please enter the name of a github user</div>
 				</div>
 				<ControlledSearchInput
 					onSearchChange={onSearchChange}

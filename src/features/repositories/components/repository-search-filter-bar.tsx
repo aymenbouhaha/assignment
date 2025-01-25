@@ -13,7 +13,7 @@ export const RepositorySearchFilterBar = ({
 	languages?: string[];
 }) => {
 	return (
-		<FormProviderWrapper form={form} className="flex gap-3" onSubmit={() => {}}>
+		<FormProviderWrapper form={form} className="flex gap-3 lg:flex-col lg:gap-2" onSubmit={() => {}}>
 			<div className="flex-[3]">
 				{languages ? (
 					<ControlledTextInput
