@@ -1,4 +1,3 @@
-import { RepositoryItem } from "@/features/repositories/components/repository-item.tsx";
 import { RepositoryPageHeader } from "@/features/repositories/components/repository-page-header.tsx";
 import { RepositorySearchFilterBar } from "@/features/repositories/components/repository-search-filter-bar.tsx";
 import { RepositoryModel } from "@/features/repositories/models/repository.model.ts";
@@ -14,13 +13,13 @@ import {
 	RepositoryFilterSchema,
 } from "@/features/repositories/models/repository-filter.model.ts";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Skeleton } from "@shared/components/ui";
 import { useDebounce } from "@shared/hooks/use-debounce.ts";
 import { cn } from "@/lib/utils.ts";
 import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
 import { API_LIMIT } from "@/features/repositories/constants/constants.ts";
 import { PaginationButton } from "@shared/components/buttons/pagination-button.tsx";
 import { ErrorComponent } from "@shared/components/others/error-component.tsx";
+import { RepositoryList } from "@/features/repositories/components/repository-list.tsx";
 
 export const Repositories = () => {
 	const { login } = useParams();
@@ -94,21 +93,7 @@ export const Repositories = () => {
 								"h-80 justify-center items-center": !loading && repositories.length === 0,
 							})}
 						>
-							{loading ? (
-								[0, 1, 2, 3, 5, 6].map((item) => (
-									<Skeleton key={`repository-skeleton.${item}`} className={"w-full h-40 "} />
-								))
-							) : repositories.length ? (
-								<>
-									{repositories.map((item, index) => (
-										<RepositoryItem key={`repository-item.${item.id}.${index}`} repository={item} />
-									))}
-								</>
-							) : (
-								<div className="text-grey-1 text-h1 !font-bold lg:text-p2 text-center">
-									{login} doesn’t have any repositories that match.
-								</div>
-							)}
+							<RepositoryList owner={login} repositories={repositories} loading={loading} />
 						</div>
 						{repositories.length > 0 && (
 							<PaginationButton
