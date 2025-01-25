@@ -32,7 +32,7 @@ export const Dropdown = ({
 			{open && (
 				<div
 					className={cn(
-						"absolute z-20 top-12 left-0 w-full bg-[#fff] rounded-md border border-grey-border shadow-drop-down flex flex-col max-h-[200px] overflow-y-scroll scrollbar-theme",
+						"absolute z-20 top-14 left-0 w-full bg-[#fff] rounded-md border border-grey-border shadow-drop-down flex flex-col max-h-[200px] overflow-y-scroll scrollbar-theme",
 						contentBoxClassName,
 					)}
 				>

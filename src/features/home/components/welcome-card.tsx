@@ -14,6 +14,7 @@ import { SearchQueryResultModel } from "@shared/models/search-query-result.model
 import { UserModel } from "@home/models/user.model.ts";
 import { ThreeDotsLoader } from "@shared/components/loaders/three-dots-loader.tsx";
 import useInfiniteScroll from "react-infinite-scroll-hook";
+import { useToast } from "@shared/hooks/use-toast.ts";
 
 export const WelcomeCard = ({
 	form,
@@ -60,15 +61,22 @@ export const WelcomeCard = ({
 		loadUsers().finally(() => setLoading(false));
 	}, [debouncedSearch]);
 
+	const { toast } = useToast();
+
 	async function loadUsers() {
 		try {
 			const { data, error } = await getUsers({ variables: { after: after, query: `${debouncedSearch} in:login` } });
+			if (error) {
+				throw new Error(error.message);
+			}
 			if (data && !error) {
 				setUsers([...users, ...data.search.nodes.filter((item) => item.__typename === "User")]);
 				setAfter(data.search.pageInfo.endCursor);
 				setHasNextPage(data.search.pageInfo.hasNextPage);
 			}
 		} catch (e) {
+			setOpen(false);
+			toast({ variant: "destructive", title: "An error occurred fetching users" });
 			console.log(e);
 		}
 	}
