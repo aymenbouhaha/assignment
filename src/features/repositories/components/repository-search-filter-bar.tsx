@@ -7,6 +7,11 @@ import {
 import { Skeleton } from "@shared/components/ui";
 import React, { useEffect, useState } from "react";
 
+type RepositorySearchFilterBarProps = {
+	languages?: string[];
+	onFilterValuesChange: (value: RepositoryFilterModel) => void;
+};
+
 /**
  * The `RepositorySearchFilterBar` component provides a search and filter interface for repositories,
  * allowing users to filter by repository name and programming language.
@@ -29,10 +34,7 @@ import React, { useEffect, useState } from "react";
 export const RepositorySearchFilterBar = ({
 	languages,
 	onFilterValuesChange,
-}: {
-	languages?: string[];
-	onFilterValuesChange: (value: RepositoryFilterModel) => void;
-}): React.JSX.Element => {
+}: RepositorySearchFilterBarProps): React.JSX.Element => {
 	const [filterValues, setFilterValues] = useState<RepositoryFilterModel>(repositoryFilterDefault);
 
 	const onRepositoryChange = (value: string) => {

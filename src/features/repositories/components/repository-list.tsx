@@ -4,6 +4,13 @@ import { RepositoryModel } from "@/features/repositories/models/repository.model
 import { cn } from "@/lib/utils.ts";
 import React from "react";
 
+type RepositoryListProps = {
+	owner?: string;
+	repositories: RepositoryModel[];
+	loading?: boolean;
+	containerClassName?: string;
+};
+
 /**
  * The `RepositoryList` component displays a list of repositories with support for loading states and empty results.
  *
@@ -31,12 +38,7 @@ export const RepositoryList = ({
 	repositories,
 	owner,
 	containerClassName,
-}: {
-	owner?: string;
-	repositories: RepositoryModel[];
-	loading?: boolean;
-	containerClassName?: string;
-}): React.JSX.Element => {
+}: RepositoryListProps): React.JSX.Element => {
 	return (
 		<div
 			className={cn("flex flex-col gap-3 border border-grey-border bg-[#fff] p-3 rounded-[10px]", containerClassName, {

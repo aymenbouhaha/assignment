@@ -1,6 +1,8 @@
 import { Icon } from "@shared/components/icons/icons.tsx";
 import React from "react";
 
+type PrimaryLanguageProps = { name: string; color: string };
+
 /**
  * The `PrimaryLanguage` component is a reusable UI element designed to display a programming language or primary language name alongside a colored dot icon.
  *
@@ -16,7 +18,7 @@ import React from "react";
  *
  * @returns {React.JSX} The rendered `PrimaryLanguage` component.
  */
-export const PrimaryLanguage = ({ name, color }: { name: string; color: string }): React.JSX.Element => {
+export const PrimaryLanguage = ({ name, color }: PrimaryLanguageProps): React.JSX.Element => {
 	return (
 		<div className="flex gap-1.5 items-center">
 			<Icon.Dot

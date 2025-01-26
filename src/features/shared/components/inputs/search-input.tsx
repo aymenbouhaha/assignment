@@ -16,6 +16,20 @@ export type Item = {
 	placeholder: string;
 };
 
+type SearchInputProps = {
+	placeholder: string;
+	leadIcon?: {
+		icon: CustomIcon;
+		iconClassName?: string;
+	};
+	getDropdownItems: (param: {
+		after: string | null;
+		search?: string;
+	}) => Promise<{ items: Item[]; cursor: PaginationModel } | undefined>;
+	errorMessage?: string;
+	onItemSelected: (item: Item) => void;
+};
+
 /**
  * The `SearchInput` component provides a searchable input field with dropdown functionality.
  * It supports infinite scrolling, debounced searches, and dynamic item fetching.
@@ -46,19 +60,7 @@ export const SearchInput = ({
 	getDropdownItems,
 	errorMessage,
 	onItemSelected,
-}: {
-	placeholder: string;
-	leadIcon?: {
-		icon: CustomIcon;
-		iconClassName?: string;
-	};
-	getDropdownItems: (param: {
-		after: string | null;
-		search?: string;
-	}) => Promise<{ items: Item[]; cursor: PaginationModel } | undefined>;
-	errorMessage?: string;
-	onItemSelected: (item: Item) => void;
-}): React.JSX.Element => {
+}: SearchInputProps): React.JSX.Element => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
