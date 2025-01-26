@@ -7,7 +7,7 @@ Githubeautified leverages the GitHub GraphQL API to make exploring GitHub users 
 
 To run this project, you need:
 - Node.js installed on your system.
-- A GitHub personal access token with the necessary permissions to access public repositories. (You can use mine I sent it through mail)
+- A GitHub personal access token with the necessary permissions to access public repositories.
 
 ### Setup Instructions
 
