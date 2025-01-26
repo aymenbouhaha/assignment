@@ -55,7 +55,6 @@ export const WelcomeCard = () => {
 					getDropdownItems={loadUsers}
 					errorMessage={"An error occurred fetching users"}
 					onItemSelected={(item) => {
-						console.log("Hello");
 						navigate(`/repositories/${item.placeholder}`);
 					}}
 				/>
