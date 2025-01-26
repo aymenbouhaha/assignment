@@ -93,22 +93,22 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
           class="flex-flex-col gap-1"
         >
           <div
-            class="flex gap-2 items-center"
+            class="flex gap-2 items-center flex-wrap"
           >
             <a
-              class="text-p1 text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2"
+              class="text-p1 !font-semibold text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2 "
               href="https://github.com/User/TestRepo1"
             >
               Test Repo 1
             </a>
             <div
-              class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-[10px] rounded"
+              class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-p6 rounded"
             >
               Public
             </div>
           </div>
           <div
-            class="text-p4 text-grey-1"
+            class="text-p4 text-grey-1 lg:text-p5"
           >
             Forked from
              
@@ -121,7 +121,7 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
           </div>
         </div>
         <div
-          class="text-p3 text-primary-black lg:text-p4"
+          class="text-p3 text-primary-black lg:text-p5 line-clamp-2"
         >
           Description of Test Repo 1
         </div>
@@ -147,7 +147,7 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
               />
             </svg>
             <div
-              class="text-p3 lg:text-p4"
+              class="text-p3 lg:text-p5"
               style="color: rgb(241, 224, 90);"
             >
               JavaScript
@@ -169,7 +169,7 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
               />
             </svg>
             <div
-              class="text-p3 text-primary-green lg:text-p4"
+              class="text-p3 text-primary-green lg:text-p5 xl:max-w-[100px] 2xl:truncate"
             >
               MIT
             </div>
@@ -187,23 +187,23 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
           class="flex-flex-col gap-1"
         >
           <div
-            class="flex gap-2 items-center"
+            class="flex gap-2 items-center flex-wrap"
           >
             <a
-              class="text-p1 text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2"
+              class="text-p1 !font-semibold text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2 "
               href="https://github.com/User/TestRepo2"
             >
               Test Repo 2
             </a>
             <div
-              class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-[10px] rounded"
+              class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-p6 rounded"
             >
               Private
             </div>
           </div>
         </div>
         <div
-          class="text-p3 text-primary-black lg:text-p4"
+          class="text-p3 text-primary-black lg:text-p5 line-clamp-2"
         >
           Description of Test Repo 2
         </div>
@@ -229,7 +229,7 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
               />
             </svg>
             <div
-              class="text-p3 lg:text-p4"
+              class="text-p3 lg:text-p5"
               style="color: rgb(53, 114, 165);"
             >
               Python
@@ -251,7 +251,7 @@ exports[`RepositoryList Component Snapshots > matches snapshot with repositories
               />
             </svg>
             <div
-              class="text-p3 text-primary-green lg:text-p4"
+              class="text-p3 text-primary-green lg:text-p5 xl:max-w-[100px] 2xl:truncate"
             >
               Apache 2.0
             </div>

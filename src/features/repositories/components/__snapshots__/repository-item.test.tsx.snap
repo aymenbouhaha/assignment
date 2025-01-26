@@ -12,22 +12,22 @@ exports[`RepositoryItem Snapshot > matches the snapshot 1`] = `
         class="flex-flex-col gap-1"
       >
         <div
-          class="flex gap-2 items-center"
+          class="flex gap-2 items-center flex-wrap"
         >
           <a
-            class="text-p1 text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2"
+            class="text-p1 !font-semibold text-primary-purple hover:underline hover:underline-offset-3 lg:text-p2 "
             href="https://github.com/test-user/test-repo"
           >
             Test Repo
           </a>
           <div
-            class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-[10px] rounded"
+            class="px-1 py-[2px] border border-grey-border text-grey-1 text-p4 lg:text-p6 rounded"
           >
             Public
           </div>
         </div>
         <div
-          class="text-p4 text-grey-1"
+          class="text-p4 text-grey-1 lg:text-p5"
         >
           Forked from 
           <a
@@ -39,7 +39,7 @@ exports[`RepositoryItem Snapshot > matches the snapshot 1`] = `
         </div>
       </div>
       <div
-        class="text-p3 text-primary-black lg:text-p4"
+        class="text-p3 text-primary-black lg:text-p5 line-clamp-2"
       >
         Test description of the repository.
       </div>
@@ -65,7 +65,7 @@ exports[`RepositoryItem Snapshot > matches the snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-p3 lg:text-p4"
+            class="text-p3 lg:text-p5"
             style="color: rgb(241, 224, 90);"
           >
             JavaScript
@@ -87,7 +87,7 @@ exports[`RepositoryItem Snapshot > matches the snapshot 1`] = `
             />
           </svg>
           <div
-            class="text-p3 text-primary-green lg:text-p4"
+            class="text-p3 text-primary-green lg:text-p5 xl:max-w-[100px] 2xl:truncate"
           >
             MIT
           </div>

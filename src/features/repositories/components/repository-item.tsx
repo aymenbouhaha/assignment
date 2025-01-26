@@ -55,7 +55,7 @@ export const RepositoryItem = ({ repository }: { repository: RepositoryModel }):
 						</div>
 					)}
 				</div>
-				<div className="text-p3 text-primary-black lg:text-p5">{repository.description}</div>
+				<div className="text-p3 text-primary-black lg:text-p5 line-clamp-2">{repository.description}</div>
 				<div className="flex gap-3">
 					{repository.primaryLanguage && (
 						<PrimaryLanguage name={repository.primaryLanguage.name} color={repository.primaryLanguage.color} />
