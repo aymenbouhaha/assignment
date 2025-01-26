@@ -1,20 +1,15 @@
-import { RepositoryPageHeader } from "@/features/repositories/components/repository-page-header.tsx";
-import { RepositorySearchFilterBar } from "@/features/repositories/components/repository-search-filter-bar.tsx";
-import { RepositoryModel } from "@/features/repositories/models/repository.model.ts";
 import { useLazyQuery } from "@apollo/client";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
-import { GetRepositoriesQuery } from "@/features/repositories/api/get-repositories-query.ts";
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import {
-	repositoryFilterDefault,
-	RepositoryFilterModel,
-} from "@/features/repositories/models/repository-filter.model.ts";
-import { useDebounce } from "@shared/hooks/use-debounce.ts";
-import { API_LIMIT } from "@/features/repositories/constants/constants.ts";
 import { PaginationButton } from "@shared/components/buttons/pagination-button.tsx";
 import { ErrorComponent } from "@shared/components/others/error-component.tsx";
-import { RepositoryList } from "@/features/repositories/components/repository-list.tsx";
+import { useDebounce } from "@shared/hooks";
+import { repositoryFilterDefault, RepositoryFilterModel } from "@repositories/models/repository-filter.model.ts";
+import { RepositoryList, RepositoryPageHeader, RepositorySearchFilterBar } from "@repositories/components";
+import { RepositoryModel } from "@repositories/models/repository.model.ts";
+import { GetRepositoriesQuery } from "@repositories/api/get-repositories-query.ts";
+import { API_LIMIT } from "@repositories/constants/constants.ts";
 
 /**
  * The `Repositories` component provides a paginated and searchable view of a user's repositories.

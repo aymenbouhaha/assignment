@@ -1,4 +1,4 @@
-import { LanguageModel } from "@/features/repositories/models/language.model.ts";
+import { LanguageModel } from "@repositories/models/language.model.ts";
 
 export interface RepositoryModel {
 	id: string;

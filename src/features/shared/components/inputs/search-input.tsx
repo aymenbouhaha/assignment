@@ -7,8 +7,7 @@ import { SearchResultItem } from "@shared/components/others/search-result.tsx";
 import { ThreeDotsLoader } from "@shared/components/loaders/three-dots-loader.tsx";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { paginationDefaultValues, PaginationModel } from "@shared/models/pagination.model.ts";
-import { useToast } from "@shared/hooks/use-toast.ts";
-import { useDebounce } from "@shared/hooks/use-debounce.ts";
+import { useToast, useDebounce } from "@shared/hooks";
 
 export type Item = {
 	image?: string;

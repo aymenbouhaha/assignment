@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
-import { RepositoryItem } from "@/features/repositories/components/repository-item.tsx";
-import { RepositoryModel } from "@/features/repositories/models/repository.model.ts";
 import { describe, it, expect } from "vitest";
+import { RepositoryItem } from "@repositories/components";
+import { RepositoryModel } from "@repositories/models/repository.model.ts";
 
 const mockRepository: RepositoryModel = {
 	id: "1",
