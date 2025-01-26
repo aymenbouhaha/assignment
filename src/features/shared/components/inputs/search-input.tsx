@@ -1,5 +1,5 @@
 import { Dropdown } from "@shared/components/dropdown/dropdown.tsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CustomIcon } from "@shared/components/icons/icons.tsx";
 import { TextInput } from "@shared/components/inputs/text-input.tsx";
 import { Loader } from "@shared/components/loaders/loader.tsx";
@@ -16,6 +16,30 @@ export type Item = {
 	placeholder: string;
 };
 
+/**
+ * The `SearchInput` component provides a searchable input field with dropdown functionality.
+ * It supports infinite scrolling, debounced searches, and dynamic item fetching.
+ *
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.placeholder - The placeholder text for the input field.
+ * @param {Object} [props.leadIcon] - Optional leading icon configuration.
+ * @param {CustomIcon} props.leadIcon.icon - The leading icon component.
+ * @param {string} [props.leadIcon.iconClassName] - Additional class names for the leading icon.
+ * @param {function} props.getDropdownItems - A function to fetch dropdown items asynchronously.
+ * @param {string} [props.errorMessage] - The error message to display on fetch failure.
+ * @param {function} props.onItemSelected - Callback invoked when an item is selected from the dropdown.
+ * @returns {React.JSX} The rendered `SearchInput` component.
+ *
+ * @example
+ * <SearchInput
+ *   placeholder="Search users"
+ *   leadIcon={{ icon: ProfileIcon, iconClassName: "text-gray-500" }}
+ *   getDropdownItems={fetchUsers}
+ *   errorMessage="Failed to fetch users"
+ *   onItemSelected={(item) => console.log(item)}
+ * />
+ */
 export const SearchInput = ({
 	placeholder,
 	leadIcon,
@@ -34,7 +58,7 @@ export const SearchInput = ({
 	}) => Promise<{ items: Item[]; cursor: PaginationModel } | undefined>;
 	errorMessage?: string;
 	onItemSelected: (item: Item) => void;
-}) => {
+}): React.JSX.Element => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -68,9 +92,17 @@ export const SearchInput = ({
 	useEffect(() => {
 		if (!debouncedSearch) return;
 		loadItems().finally(() => setLoading(false));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debouncedSearch]);
 
-	async function loadItems() {
+	/**
+	 * Fetches items for the dropdown based on the current search and cursor.
+	 *
+	 * @async
+	 * @function
+	 * @returns {Promise<void>} Resolves when the items are fetched and state is updated.
+	 */
+	async function loadItems(): Promise<void> {
 		try {
 			const result = await getDropdownItems({ after: cursor.endCursor, search: debouncedSearch });
 			if (result) {

@@ -1,7 +1,38 @@
 import { useBlur } from "@shared/hooks/user-blur.ts";
 import { cn } from "@/lib/utils.ts";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
+/**
+ * The `Dropdown` component provides a reusable dropdown menu with a trigger element and a customizable content area.
+ * It supports opening and closing based on blur events and integrates a utility to detect clicks inside/outside the dropdown.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Dropdown
+ *   open={isOpen}
+ *   setOpen={setIsOpen}
+ *   trigger={<button onClick={() => setIsOpen(!isOpen)}>Open Dropdown</button>}
+ *   content={
+ *     <ul>
+ *       <li>Option 1</li>
+ *       <li>Option 2</li>
+ *       <li>Option 3</li>
+ *     </ul>
+ *   }
+ *   contentBoxClassName="custom-class"
+ * />
+ * ```
+ *
+ * @param {Object} props - Component props.
+ * @param {(value: boolean) => void} props.setOpen - Function to update the open state of the dropdown.
+ * @param {boolean} props.open - Whether the dropdown is open or not.
+ * @param {ReactNode} props.trigger - The element that triggers the dropdown to open/close.
+ * @param {ReactNode} props.content - The content to display inside the dropdown.
+ * @param {string} [props.contentBoxClassName] - Additional class names for styling the dropdown content box.
+ *
+ * @returns {React.JSX} The rendered dropdown component.
+ */
 export const Dropdown = ({
 	setOpen,
 	open,
@@ -14,7 +45,7 @@ export const Dropdown = ({
 	trigger: ReactNode;
 	content: ReactNode;
 	contentBoxClassName?: string;
-}) => {
+}): React.JSX.Element => {
 	const { ref, isInside } = useBlur();
 
 	return (

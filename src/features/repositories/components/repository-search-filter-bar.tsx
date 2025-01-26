@@ -5,15 +5,34 @@ import {
 	RepositoryFilterModel,
 } from "@/features/repositories/models/repository-filter.model.ts";
 import { Skeleton } from "@shared/components/ui";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
+/**
+ * The `RepositorySearchFilterBar` component provides a search and filter interface for repositories,
+ * allowing users to filter by repository name and programming language.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <RepositorySearchFilterBar
+ *   languages={["JavaScript", "Python", "TypeScript"]}
+ *   onFilterValuesChange={(filterValues) => console.log(filterValues)}
+ * />
+ * ```
+ *
+ * @param {Object} props - Component props.
+ * @param {string[]} [props.languages] - A list of available programming languages for filtering.
+ * @param {(value: RepositoryFilterModel) => void} props.onFilterValuesChange - Callback triggered when filter values change.
+ *
+ * @returns {React.JSX} The rendered `RepositorySearchFilterBar` component.
+ */
 export const RepositorySearchFilterBar = ({
 	languages,
 	onFilterValuesChange,
 }: {
 	languages?: string[];
 	onFilterValuesChange: (value: RepositoryFilterModel) => void;
-}) => {
+}): React.JSX.Element => {
 	const [filterValues, setFilterValues] = useState<RepositoryFilterModel>(repositoryFilterDefault);
 
 	const onRepositoryChange = (value: string) => {
@@ -26,6 +45,7 @@ export const RepositorySearchFilterBar = ({
 
 	useEffect(() => {
 		onFilterValuesChange(filterValues);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [filterValues]);
 
 	return (

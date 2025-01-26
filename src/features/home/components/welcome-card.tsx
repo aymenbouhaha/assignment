@@ -1,19 +1,50 @@
 import { Icon } from "@shared/components/icons/icons.tsx";
-import { SearchInput } from "@shared/components/inputs/search-input.tsx";
+import { Item, SearchInput } from "@shared/components/inputs/search-input.tsx";
 import { useLazyQuery } from "@apollo/client";
 import { GetUsersQuery } from "@home/api/get-users-query.ts";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
 import { UserModel } from "@home/models/user.model.ts";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+import { PaginationModel } from "@shared/models/pagination.model.ts";
 
-export const WelcomeCard = () => {
+/**
+ * The `WelcomeCard` component displays a welcoming card for the application,
+ * allowing users to search for GitHub users by their username.
+ *
+ * @component
+ * @returns {React.JSX} The rendered welcome card component.
+ *
+ * @example
+ * <WelcomeCard />
+ */
+export const WelcomeCard = (): React.JSX.Element => {
 	const [getUsers] = useLazyQuery<SearchQueryResultModel<UserModel>>(GetUsersQuery, {
 		fetchPolicy: "network-only",
 	});
 
 	const navigate = useNavigate();
 
-	const loadUsers = async ({ after, search }: { after: string | null; search?: string }) => {
+	/**
+	 * Fetches a list of GitHub users based on the input search query.
+	 *
+	 * @async
+	 * @function
+	 * @param {Object} params - Parameters for the query.
+	 * @param {string | null} params.after - Cursor for pagination.
+	 * @param {string } [params.search] - Search query for filtering GitHub users.
+	 * @returns {Promise<{ items: { placeholder: string; image: string; value: string }[], cursor: PaginationModel } | undefined>}
+	 * Resolves to a list of user items with their metadata and pagination info, or `undefined` if no data is available.
+	 *
+	 * @throws {Error} Throws an error if the query fails.
+	 */
+	const loadUsers = async ({
+		after,
+		search,
+	}: {
+		after: string | null;
+		search?: string;
+	}): Promise<{ items: Item[]; cursor: PaginationModel } | undefined> => {
 		const { data, error } = await getUsers({
 			variables: { after, query: `${search} in:login` },
 		});

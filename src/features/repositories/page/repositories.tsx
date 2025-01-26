@@ -5,7 +5,7 @@ import { useLazyQuery } from "@apollo/client";
 import { SearchQueryResultModel } from "@shared/models/search-query-result.model.ts";
 import { GetRepositoriesQuery } from "@/features/repositories/api/get-repositories-query.ts";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	repositoryFilterDefault,
 	RepositoryFilterModel,
@@ -16,7 +16,15 @@ import { PaginationButton } from "@shared/components/buttons/pagination-button.t
 import { ErrorComponent } from "@shared/components/others/error-component.tsx";
 import { RepositoryList } from "@/features/repositories/components/repository-list.tsx";
 
-export const Repositories = () => {
+/**
+ * The `Repositories` component provides a paginated and searchable view of a user's repositories.
+ * It supports filtering by repository name and language, and handles data fetching using GraphQL.
+ *
+ * @component
+ *
+ * @returns {React.JSX} The rendered `Repositories` component.
+ */
+export const Repositories = (): React.JSX.Element => {
 	const { login } = useParams();
 
 	const [filters, setFilters] = useState<RepositoryFilterModel>(repositoryFilterDefault);
@@ -34,6 +42,12 @@ export const Repositories = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [login, language, debouncedRepository]);
 
+	/**
+	 * Fetches repositories using the given cursor for pagination.
+	 *
+	 * @param {string | null} after - The cursor to fetch the next page.
+	 * @param {string | null} before - The cursor to fetch the previous page.
+	 */
 	async function loadRepositories(after: string | null, before: string | null) {
 		let query = `owner:${login} fork:true is:private is:public sort:updated`;
 		if (language) query += ` language:${language}`;

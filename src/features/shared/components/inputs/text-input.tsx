@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Input } from "@shared/components/ui";
 import { CustomIcon, Icon } from "@shared/components/icons/icons.tsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface TextInputProps {
 	placeholder: string;
@@ -13,11 +13,39 @@ interface TextInputProps {
 	inputClassName?: string;
 }
 
-export const TextInput = ({ placeholder, inputClassName, leadIcon, onValueChange }: TextInputProps) => {
+/**
+ * The `TextInput` component renders a text input field with optional leading and trailing icons,
+ * a placeholder, and a callback for handling value changes.
+ *
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.placeholder - Placeholder text displayed in the input field.
+ * @param {Object} [props.leadIcon] - Optional leading icon displayed inside the input field.
+ * @param {CustomIcon} props.leadIcon.icon - Icon type for the leading icon.
+ * @param {string} [props.leadIcon.className] - Additional class names for styling the leading icon.
+ * @param {function} [props.onValueChange] - Callback invoked when the input value changes.
+ * @param {string} [props.inputClassName] - Additional class names for the input field.
+ * @returns {React.JSX} The rendered `TextInput` component.
+ *
+ * @example
+ * <TextInput
+ *   placeholder="Enter your name"
+ *   leadIcon={{ icon: "Search", className: "text-gray-500" }}
+ *   onValueChange={(value) => console.log("Input value:", value)}
+ *   inputClassName="border border-gray-300"
+ * />
+ */
+export const TextInput = ({
+	placeholder,
+	inputClassName,
+	leadIcon,
+	onValueChange,
+}: TextInputProps): React.JSX.Element => {
 	const [value, setValue] = useState<string>("");
 
 	useEffect(() => {
 		if (onValueChange) onValueChange(value);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [value]);
 
 	return (
