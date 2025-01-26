@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { useLazyQuery } from "@apollo/client";
-import { Repositories } from "@/features/repositories/page/repositories.tsx";
+import { Repositories } from "@repositories/page/repositories.tsx";
 import { describe, it, vi, expect } from "vitest";
 
 vi.mock("@apollo/client", async () => {

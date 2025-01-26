@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { RepositorySearchFilterBar } from "@/features/repositories/components/repository-search-filter-bar";
-import { repositoryFilterDefault } from "@/features/repositories/models/repository-filter.model.ts";
+import { RepositorySearchFilterBar } from "@repositories/components";
+import { repositoryFilterDefault } from "@repositories/models/repository-filter.model.ts";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 describe("RepositorySearchFilterBar", () => {

@@ -1,5 +1,5 @@
-import { Home } from "@/features/home";
-import { Repositories } from "@/features/repositories/page/repositories.tsx";
+import { Repositories } from "@repositories/page/repositories.tsx";
+import { Home } from "@home/pages/home";
 
 export const AppRoutes = [
 	{

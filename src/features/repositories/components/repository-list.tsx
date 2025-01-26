@@ -1,6 +1,6 @@
 import { Skeleton } from "@shared/components/ui";
-import { RepositoryItem } from "@/features/repositories/components/repository-item.tsx";
-import { RepositoryModel } from "@/features/repositories/models/repository.model.ts";
+import { RepositoryItem } from "@repositories/components";
+import { RepositoryModel } from "@repositories/models/repository.model.ts";
 import { cn } from "@/lib/utils.ts";
 import React from "react";
 

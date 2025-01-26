@@ -1,9 +1,6 @@
 import { TextInput } from "@shared/components/inputs/text-input.tsx";
 import { SelectInput } from "@shared/components/inputs/select-input.tsx";
-import {
-	repositoryFilterDefault,
-	RepositoryFilterModel,
-} from "@/features/repositories/models/repository-filter.model.ts";
+import { repositoryFilterDefault, RepositoryFilterModel } from "@repositories/models/repository-filter.model.ts";
 import { Skeleton } from "@shared/components/ui";
 import React, { useEffect, useState } from "react";
 

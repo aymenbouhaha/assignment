@@ -1,7 +1,6 @@
-import { PrimaryLanguage } from "./primary-language.tsx";
-import { License } from "@/features/repositories/components/license.tsx";
-import { RepositoryModel } from "@/features/repositories/models/repository.model.ts";
+import { RepositoryModel } from "@repositories/models/repository.model.ts";
 import React from "react";
+import { License, PrimaryLanguage } from "@repositories/components";
 
 /**
  * The `RepositoryItem` component displays information about a repository, including its name, description, primary language, and license.

@@ -27,7 +27,8 @@
         "./src/*"
       ],
       "@shared/*": ["./src/features/shared/*"],
-      "@home/*" : ["./src/features/home/*"]
+      "@home/*" : ["./src/features/home/*"],
+      "@repositories/*" : ["./src/features/repositories/*"]
     }
   },
   "include": ["src"],
