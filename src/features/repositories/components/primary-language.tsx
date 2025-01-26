@@ -28,7 +28,7 @@ export const PrimaryLanguage = ({ name, color }: PrimaryLanguageProps): React.JS
 				}}
 			/>
 			<div
-				className="text-p3 lg:text-p4"
+				className="text-p3 lg:text-p5"
 				style={{
 					color: color,
 				}}

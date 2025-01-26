@@ -28,6 +28,7 @@ type SearchInputProps = {
 	}) => Promise<{ items: Item[]; cursor: PaginationModel } | undefined>;
 	errorMessage?: string;
 	onItemSelected: (item: Item) => void;
+	dropdownBoxClassName?: string;
 };
 
 /**
@@ -43,6 +44,7 @@ type SearchInputProps = {
  * @param {function} props.getDropdownItems - A function to fetch dropdown items asynchronously.
  * @param {string} [props.errorMessage] - The error message to display on fetch failure.
  * @param {function} props.onItemSelected - Callback invoked when an item is selected from the dropdown.
+ * @param {string} [props.dropdownBoxClassName] - Additional class names for the dropdown container
  * @returns {React.JSX} The rendered `SearchInput` component.
  *
  * @example
@@ -60,6 +62,7 @@ export const SearchInput = ({
 	getDropdownItems,
 	errorMessage,
 	onItemSelected,
+	dropdownBoxClassName,
 }: SearchInputProps): React.JSX.Element => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -155,6 +158,7 @@ export const SearchInput = ({
 					)}
 				</>
 			}
+			contentBoxClassName={dropdownBoxClassName}
 		/>
 	);
 };

@@ -68,14 +68,18 @@ export const WelcomeCard = (): React.JSX.Element => {
 	return (
 		<div
 			className={
-				"flex w-[400px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-2/50 p-4 md:mx-2"
+				"flex w-[500px] bg-[#fff] flex-col gap-9 items-center rounded-[14px] border border-grey-2/50 py-10 p-4 lg:mx-4 lg:p-4"
 			}
 		>
 			<div className="flex w-full flex-col items-center gap-[18px]">
-				<Icon.UserGraphic />
+				<Icon.UserGraphic className={"size-24 lg:size-14"} />
 				<div className="flex flex-col items-center gap-1">
-					<div className="text-h1 text-secondary-black text-center">Welcome to Githubeautified</div>
-					<div className="text-p21 text-primary-black text-center">Please enter the name of a github user</div>
+					<div className="text-h1 text-secondary-black text-center lg:text-p3 lg:font-bold">
+						Welcome to Githubeautified
+					</div>
+					<div className="text-p21 text-primary-black text-center lg:text-p4">
+						Please enter the name of a github user
+					</div>
 				</div>
 				<SearchInput
 					placeholder={"Github user name"}
@@ -88,6 +92,7 @@ export const WelcomeCard = (): React.JSX.Element => {
 					onItemSelected={(item) => {
 						navigate(`/repositories/${item.placeholder}`);
 					}}
+					dropdownBoxClassName={"max-h-[180px]"}
 				/>
 			</div>
 		</div>

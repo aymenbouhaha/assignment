@@ -43,6 +43,18 @@ export default {
 					fontWeight: "400",
 				},
 			],
+			p5: [
+				"12px",
+				{
+					fontWeight: "400",
+				},
+			],
+			p6: [
+				"10px",
+				{
+					fontWeight: "400",
+				},
+			],
 		},
 		screens: {
 			"2xl": { max: "1535px" },
