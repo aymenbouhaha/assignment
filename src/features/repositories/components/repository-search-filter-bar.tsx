@@ -49,7 +49,7 @@ export const RepositorySearchFilterBar = ({
 						placeholder={"Languages"}
 					/>
 				) : (
-					<Skeleton className={"h-full"} />
+					<Skeleton className={"h-12"} />
 				)}
 			</div>
 		</div>

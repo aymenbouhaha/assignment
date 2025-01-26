@@ -1,0 +1,138 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SelectInput > renders correctly with a selected value 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-full"
+  >
+    <div
+      class="relative w-full"
+    >
+      <button
+        aria-autocomplete="none"
+        aria-controls="radix-:r3:"
+        aria-expanded="false"
+        class="flex w-full items-center justify-between whitespace-nowrap rounded-md border border-grey-border focus:border-grey-2 bg-[#fff] px-3 py-2.5 ring-0 !text-p21 lg:!text-p3 outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 text-primary-black"
+        data-state="closed"
+        dir="ltr"
+        role="combobox"
+        type="button"
+      >
+        <span
+          style="pointer-events: none;"
+        >
+          Option 1
+        </span>
+      </button>
+      <svg
+        class="stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+        fill="none"
+        height="24"
+        stroke="none"
+        viewBox="0 0 25 24"
+        width="25"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M17.5 7L7.5 17M7.5 7L17.5 17"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1.5"
+        />
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SelectInput > renders correctly with placeholder and no selected value 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-full"
+  >
+    <div
+      class="relative w-full"
+    >
+      <button
+        aria-autocomplete="none"
+        aria-controls="radix-:r0:"
+        aria-expanded="false"
+        class="flex w-full items-center justify-between whitespace-nowrap rounded-md border border-grey-border focus:border-grey-2 bg-[#fff] px-3 py-2.5 ring-0 !text-p21 lg:!text-p3 outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 text-grey-1"
+        data-placeholder=""
+        data-state="closed"
+        dir="ltr"
+        role="combobox"
+        type="button"
+      >
+        <span
+          style="pointer-events: none;"
+        >
+          Select an option
+        </span>
+      </button>
+      <svg
+        class="lucide lucide-chevron-down stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`SelectInput > renders correctly with the clear icon when a value is selected 1`] = `
+<DocumentFragment>
+  <div
+    class="w-full h-full"
+  >
+    <div
+      class="relative w-full"
+    >
+      <button
+        aria-autocomplete="none"
+        aria-controls="radix-:ra:"
+        aria-expanded="false"
+        class="flex w-full items-center justify-between whitespace-nowrap rounded-md border border-grey-border focus:border-grey-2 bg-[#fff] px-3 py-2.5 ring-0 !text-p21 lg:!text-p3 outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 text-grey-1"
+        data-placeholder=""
+        data-state="closed"
+        dir="ltr"
+        role="combobox"
+        type="button"
+      >
+        <span
+          style="pointer-events: none;"
+        >
+          Select an option
+        </span>
+      </button>
+      <svg
+        class="lucide lucide-chevron-down stroke-grey-2 absolute size-6 top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+        fill="none"
+        height="24"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m6 9 6 6 6-6"
+        />
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
